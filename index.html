@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El's Availability Schedule</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+       background: #fafbfc; color: #1f3a5f; padding: 1.5rem; }
+.container { max-width: 1100px; margin: 0 auto; }
+h1 { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.25rem; }
+.last-updated { font-size: 0.8rem; color: #5a6b80; margin-bottom: 1rem; }
+.legend { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.2rem; font-size: 0.8rem; }
+.legend-item { display: inline-flex; align-items: center; gap: 0.4rem; }
+.dot { width: 12px; height: 12px; border-radius: 3px; }
+.week-nav { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+.week-btn { padding: 0.4rem 1rem; border: 1px solid #cbd5e1; border-radius: 6px;
+           background: #fff; cursor: pointer; font-size: 0.85rem; color: #33475b; }
+.week-btn.active { background: #1f3a5f; color: #fff; border-color: #1f3a5f; }
+.week-title { font-size: 0.95rem; color: #5a6b80; margin: 0.2rem 0 0.6rem; }
+.timeline-wrapper { margin-bottom: 1.5rem; }
+.timeline { overflow-x: auto; }
+.t-grid { display: grid; grid-template-columns: 56px repeat(7, 1fr); min-width: 720px;
+          border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; }
+.t-row { display: contents; }
+.t-time-header, .t-day-header { padding: 0.5rem; font-size: 0.75rem; font-weight: 600;
+         background: #f1f5f9; border-bottom: 1px solid #e2e8f0; text-align: center; }
+.t-day-header .day-date { display: block; font-weight: 400; color: #64748b; }
+.t-time { padding: 0.5rem; font-size: 0.7rem; color: #64748b; border-right: 1px solid #eef2f7;
+         background: #f8fafc; }
+.t-cell { min-height: 40px; border-right: 1px solid #eef2f7; border-bottom: 1px solid #eef2f7;
+         padding: 2px; font-size: 0.7rem; }
+.t-cell-empty { background: transparent; }
+.t-ev-time { font-size: 0.62rem; color: #475569; font-weight: 600; display: block; }
+.t-ev-subj { color: #1e293b; display: block; }
+footer { margin-top: 1rem; font-size: 0.75rem; color: #94a3b8; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>📅 El's Availability Schedule</h1>
+  <p class="last-updated">Last updated: Mon, 28 Sep 2026 20:20 WIB</p>
+  <div class="legend"><span class="legend-item"><span class="dot" style="background:#e3f2fd"></span> Class</span>
+<span class="legend-item"><span class="dot" style="background:#f3e5f5"></span> Personal</span>
+<span class="legend-item"><span class="dot" style="background:#fff3e0"></span> Busy</span>
+<span class="legend-item"><span class="dot" style="background:#e8f5e9"></span> Bookable</span></div>
+  <div class="week-nav">
+    <button class="week-btn active" data-target="2026-09-28">Week 1</button><button class="week-btn" data-target="2026-10-05">Week 2</button>
+  </div>
+  <div class="timeline-wrapper" data-week="2026-09-28">
+<h3 class="week-title">2026-09-28 – 2026-10-04</h3>
+<div class="timeline">
+<div class="t-grid">
+<div class="t-row t-header">
+<div class="t-time-header">WIB</div>
+<div class="t-day-header"><span class="day-name">Mon</span><span class="day-date">09/28</span></div>
+<div class="t-day-header"><span class="day-name">Tue</span><span class="day-date">09/29</span></div>
+<div class="t-day-header"><span class="day-name">Wed</span><span class="day-date">09/30</span></div>
+<div class="t-day-header"><span class="day-name">Thu</span><span class="day-date">10/01</span></div>
+<div class="t-day-header"><span class="day-name">Fri</span><span class="day-date">10/02</span></div>
+<div class="t-day-header"><span class="day-name">Sat</span><span class="day-date">10/03</span></div>
+<div class="t-day-header"><span class="day-name">Sun</span><span class="day-date">10/04</span></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">06:00</div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">07:00</div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time">07:30–07:31 </span><span class="t-ev-subj">Anggrek to Alam Sutera (Bus)</span></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">08:00</div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time">08:00–23:30 </span><span class="t-ev-subj">[SOCS &amp; - Pembuatan Materi</span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time">08:00–23:30 </span><span class="t-ev-subj">[SOCS &amp; - Pembuatan Materi</span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time">08:00–23:30 </span><span class="t-ev-subj">[SOCS &amp; - Pembuatan Materi</span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time">08:00–23:30 </span><span class="t-ev-subj">[SOCS &amp; - Pembuatan Materi</span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time">08:00–23:30 </span><span class="t-ev-subj">[SOCS &amp; - Pembuatan Materi</span></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">09:00</div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time">09:00–17:00 </span><span class="t-ev-subj">Lecturing</span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time">09:00–17:00 </span><span class="t-ev-subj">Lecturing</span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time">09:00–17:00 </span><span class="t-ev-subj">Lecturing</span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">10:00</div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">11:00</div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">12:00</div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">13:00</div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">14:00</div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">15:00</div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">16:00</div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time">16:00–17:00 </span><span class="t-ev-subj">Focus Time</span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time">16:00–17:00 </span><span class="t-ev-subj">Focus Time</span></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">17:00</div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">18:00</div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">19:00</div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time">19:00–20:00 </span><span class="t-ev-subj">Rapat dengan Hamra</span></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">20:00</div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time">20:00–21:00 </span><span class="t-ev-subj">Meeting: Discussion and review</span></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">21:00</div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time">21:00–22:00 </span><span class="t-ev-subj">Meeting: thesis</span></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="timeline-wrapper" data-week="2026-10-05">
+<h3 class="week-title">2026-10-05 – 2026-10-11</h3>
+<div class="timeline">
+<div class="t-grid">
+<div class="t-row t-header">
+<div class="t-time-header">WIB</div>
+<div class="t-day-header"><span class="day-name">Mon</span><span class="day-date">10/05</span></div>
+<div class="t-day-header"><span class="day-name">Tue</span><span class="day-date">10/06</span></div>
+<div class="t-day-header"><span class="day-name">Wed</span><span class="day-date">10/07</span></div>
+<div class="t-day-header"><span class="day-name">Thu</span><span class="day-date">10/08</span></div>
+<div class="t-day-header"><span class="day-name">Fri</span><span class="day-date">10/09</span></div>
+<div class="t-day-header"><span class="day-name">Sat</span><span class="day-date">10/10</span></div>
+<div class="t-day-header"><span class="day-name">Sun</span><span class="day-date">10/11</span></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">06:00</div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">07:00</div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">08:00</div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time">08:00–23:30 </span><span class="t-ev-subj">[SOCS &amp; - Pembuatan Materi</span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time">08:00–23:30 </span><span class="t-ev-subj">[SOCS &amp; - Pembuatan Materi</span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time">08:00–23:30 </span><span class="t-ev-subj">[SOCS &amp; - Pembuatan Materi</span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time">08:00–23:30 </span><span class="t-ev-subj">[SOCS &amp; - Pembuatan Materi</span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time">08:00–23:30 </span><span class="t-ev-subj">[SOCS &amp; - Pembuatan Materi</span></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">09:00</div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time">09:00–17:00 </span><span class="t-ev-subj">Lecturing</span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time">09:00–17:00 </span><span class="t-ev-subj">Lecturing</span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time">09:00–17:00 </span><span class="t-ev-subj">Lecturing</span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">10:00</div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">11:00</div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">12:00</div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">13:00</div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">14:00</div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">15:00</div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">16:00</div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#e3f2fd"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time"></span><span class="t-ev-subj"></span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time">16:00–17:00 </span><span class="t-ev-subj">Focus Time</span></div>
+<div class="t-cell t-filled" style="background:#fff3e0"><span class="t-ev-time">16:00–17:00 </span><span class="t-ev-subj">Focus Time</span></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">17:00</div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">18:00</div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">19:00</div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">20:00</div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+<div class="t-row t-hour-row">
+<div class="t-time">21:00</div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+<div class="t-cell t-cell-empty"></div>
+</div>
+</div>
+</div>
+</div>
+  <footer>El's Availability Schedule — BINUS University &middot; School of Computer Science</footer>
+</div>
+<script>
+  var cur = 0;
+  var btns = document.querySelectorAll('.week-btn');
+  var wrap = document.querySelectorAll('.timeline-wrapper');
+  function show(i) {
+    cur = i;
+    wrap.forEach(function (w, j) { w.style.display = j === i ? '' : 'none'; });
+    btns.forEach(function (b, j) { b.classList.toggle('active', j === i); });
+  }
+  btns.forEach(function (b, i) { b.addEventListener('click', function () { show(i); }); });
+  show(0);
+</script>
+</body>
+</html>
